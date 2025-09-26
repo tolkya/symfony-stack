@@ -7,7 +7,6 @@ FROM dunglas/frankenphp:1-php8.4 AS frankenphp_upstream
 # https://docs.docker.com/develop/develop-images/multistage-build/#stop-at-a-specific-build-stage
 # https://docs.docker.com/compose/compose-file/#target
 
-
 # Base FrankenPHP image
 FROM frankenphp_upstream AS frankenphp_base
 
@@ -18,20 +17,30 @@ VOLUME /app/var/
 # persistent / runtime deps
 # hadolint ignore=DL3008
 RUN apt-get update && apt-get install -y --no-install-recommends \
-	acl \
-	file \
-	gettext \
-	git \
-	&& rm -rf /var/lib/apt/lists/*
+    acl \
+    file \
+    gettext \
+    git \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Installer Node.js et npm
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g @dbml/cli
+	
+# 🔧 Ajouter l'alias sf de façon permanente
+RUN echo 'alias sf="php bin/console"' >> /root/.bashrc && \
+    echo 'alias sf="php bin/console"' >> /etc/bash.bashrc
 
 RUN set -eux; \
-	install-php-extensions \
-		@composer \
-		apcu \
-		intl \
-		opcache \
-		zip \
-	;
+    install-php-extensions \
+        @composer \
+        apcu \
+        intl \
+        opcache \
+        zip \
+    ;
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -42,6 +51,9 @@ ENV MERCURE_TRANSPORT_URL=bolt:///data/mercure.db
 ENV PHP_INI_SCAN_DIR=":$PHP_INI_DIR/app.conf.d"
 
 ###> recipes ###
+###> doctrine/doctrine-bundle ###
+RUN install-php-extensions pdo_pgsql
+###< doctrine/doctrine-bundle ###
 ###< recipes ###
 
 COPY --link frankenphp/conf.d/10-app.ini $PHP_INI_DIR/app.conf.d/
