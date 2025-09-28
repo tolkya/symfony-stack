@@ -323,23 +323,12 @@ volumes:
 <details>
     <summary><h2>3.3.1 - Modification du .yaml</h2></summary>
 
-Ajouter la section `env_file:` dans le service `php` :
-```bash
-    restart: unless-stopped
-    env_file: # <- Ajouter cette ligne
-      - .env # <- Ajouter cette ligne
-      - .env.local # <- Ajouter cette ligne
-    environment:
-```
-supprimer cette ligne dans la section `volumes` du service `php` :
+Supprimer cette ligne dans la section `volumes` du service `php` :
 ```yaml
 DATABASE_URL: postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:5432/${POSTGRES_DB:-app}
 ```
 Ajouter et modifier dans le service `database` :
 ```bash
-    env_file: # <- Ajouter cette ligne
-      - .env # <- Ajouter cette ligne
-      - .env.local # <- Ajouter cette ligne
     environment:
       POSTGRES_DB: ${POSTGRES_DB} # <- modifier cette ligne
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD} # <- modifier cette ligne
@@ -350,7 +339,24 @@ Ajouter et modifier dans le service `database` :
 ```
 </details>
 <details>
-    <summary><h2>3.3.2 - Configuration du fichiers d'environnement non versionné</h2></summary>
+    <summary><h2>3.3.2 - Configuration des fichiers d'environnement</h2></summary>
+
+Modifier le fichier ".env" 
+```bash
+# DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=10.11.2-MariaDB&charset=utf8mb4"
+DATABASE_URL=""                             # <- modifier cette ligne
+###< doctrine/doctrine-bundle ###
+
+###> Docker PostgreSQL Configuration ###    # <- ajouter cette ligne
+POSTGRES_USER=""                            # <- ajouter cette ligne
+POSTGRES_PASSWORD=""                        # <- ajouter cette ligne
+POSTGRES_DB=""                              # <- ajouter cette ligne
+###< Docker PostgreSQL Configuration ###    # <- ajouter cette ligne
+```
+
+</details>
+<details>
+    <summary><h2>3.3.3 - Configuration du fichiers d'environnement non versionné</h2></summary>
 
 Créer le fichier ".env.local", avec les vrais mots de passe
 ```bash
@@ -365,23 +371,19 @@ POSTGRES_PASSWORD=postgres_admin_secret_123
 POSTGRES_DB=app
 ###< Database Configuration ###
 ```
-</details>
-<details>
-    <summary><h2>3.3.3 - Configuration des fichiers d'environnement</h2></summary>
 
-Modifier le fichier ".env" 
+Et COUPER / COLLER ce block du .env vers le env.local (pourra servir si changement Postgres --> MySQL)
 ```bash
+###> doctrine/doctrine-bundle ###
+# Format described at https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
+# IMPORTANT: You MUST configure your server version, either here or in config/packages/doctrine.yaml
+#
+# DATABASE_URL="sqlite:///%kernel.project_dir%/var/data_%kernel.environment%.db"
+# DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=8.0.32&charset=utf8mb4"
 # DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=10.11.2-MariaDB&charset=utf8mb4"
-DATABASE_URL="postgresql://user_symfony:CHANGE_ME@database:5432/app?serverVersion=16&charset=utf8" # <- modifier cette ligne
+
 ###< doctrine/doctrine-bundle ###
-
-###> Docker PostgreSQL Configuration ### # <- ajouter cette ligne
-POSTGRES_USER=postgres                   # <- ajouter cette ligne
-POSTGRES_PASSWORD=CHANGE_ME              # <- ajouter cette ligne
-POSTGRES_DB=app                          # <- ajouter cette ligne
-###< Docker PostgreSQL Configuration ### # <- ajouter cette ligne
 ```
-
 </details>
 <details>
     <summary><h2>3.3.4 - ‼️⚠️‼️Application des modifications‼️⚠️‼️</h2></summary>
