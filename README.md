@@ -255,7 +255,7 @@ Sortir
 </details>
 </details>
 <details>
-    <summary><h1> 🆔 3. Création d'un utilisateur avec privilèges limités</h1></summary>
+    <summary><h1> 🆔 3. Création user avec privilèges limités</h1></summary>
 <details>
     <summary><h2> 3.1 - Création du script d'initialisation</h2></summary>
 
