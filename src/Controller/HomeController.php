@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class HomeController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
+    #[Route('/', name: 'accueil')]
     public function index(): Response
     {
         // Créer vos variables
