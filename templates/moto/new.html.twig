@@ -1,0 +1,141 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une moto{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4">🏍️ Ajouter une nouvelle moto</h1>
+
+    {% for flash_error in app.flashes('error') %}
+        <div class="alert alert-danger">{{ flash_error }}</div>
+    {% endfor %}
+
+    {% for flash_success in app.flashes('success') %}
+        <div class="alert alert-success">{{ flash_success }}</div>
+    {% endfor %}
+
+    <div class="card">
+        <div class="card-body">
+            {{ form_start(motoForm, {'attr': {'enctype': 'multipart/form-data'}}) }}
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        {{ form_label(motoForm.Marque) }}
+                        {{ form_widget(motoForm.Marque, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(motoForm.Marque) }}
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        {{ form_label(motoForm.Modele) }}
+                        {{ form_widget(motoForm.Modele, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(motoForm.Modele) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        {{ form_label(motoForm.Edition) }}
+                        {{ form_widget(motoForm.Edition, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(motoForm.Edition) }}
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        {{ form_label(motoForm.Categorie) }}
+                        {{ form_widget(motoForm.Categorie, {'attr': {'class': 'form-select'}}) }}
+                        {{ form_errors(motoForm.Categorie) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        {{ form_label(motoForm.Annee) }}
+                        {{ form_widget(motoForm.Annee, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(motoForm.Annee) }}
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        {{ form_label(motoForm.Cylindree) }}
+                        {{ form_widget(motoForm.Cylindree, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(motoForm.Cylindree) }}
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        {{ form_label(motoForm.Chevaux) }}
+                        {{ form_widget(motoForm.Chevaux, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(motoForm.Chevaux) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(motoForm.Couleur) }}
+                {{ form_widget(motoForm.Couleur, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(motoForm.Couleur) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(motoForm.Description) }}
+                {{ form_widget(motoForm.Description, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(motoForm.Description) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(motoForm.Utilite) }}
+                {{ form_widget(motoForm.Utilite, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(motoForm.Utilite) }}
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(motoForm.imageFile) }}
+                {{ form_widget(motoForm.imageFile, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(motoForm.imageFile) }}
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a href="{{ path('app_moto_list') }}" class="btn btn-secondary me-md-2">Annuler</a>
+                {{ form_widget(motoForm.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+            </div>
+
+            {{ form_end(motoForm) }}
+        </div>
+    </div>
+</div>
+
+<style>
+.container {
+    max-width: 800px;
+}
+
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.form-label {
+    font-weight: 600;
+    color: #495057;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+}
+</style>
+{% endblock %}

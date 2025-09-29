@@ -1,0 +1,131 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ moto.Marque }} {{ moto.Modele }}{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_moto_list') }}">Garage</a></li>
+            <li class="breadcrumb-item active">{{ moto.Marque }} {{ moto.Modele }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-lg-6">
+            {% if moto.Image %}
+                <img src="{{ asset('uploads/' ~ moto.Image) }}" 
+                     class="img-fluid rounded shadow"
+                     alt="{{ moto.Marque }} {{ moto.Modele }}"
+                     style="width: 100%; max-height: 500px; object-fit: cover;">
+            {% else %}
+                <div class="d-flex align-items-center justify-content-center bg-light rounded shadow" 
+                     style="height: 400px;">
+                    <i class="fas fa-motorcycle fa-5x text-muted"></i>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h1 class="card-title h2 mb-3">
+                        {{ moto.Marque }} {{ moto.Modele }}
+                        <span class="badge bg-primary ms-2">{{ moto.Annee }}</span>
+                    </h1>
+
+                    {% if moto.Edition %}
+                        <p class="lead text-muted mb-4">{{ moto.Edition }}</p>
+                    {% endif %}
+
+                    <div class="row mb-4">
+                        <div class="col-6 mb-3">
+                            <h6 class="text-muted mb-1">Catégorie</h6>
+                            <span class="badge bg-secondary fs-6">{{ moto.Categorie }}</span>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h6 class="text-muted mb-1">Couleur</h6>
+                            <strong>{{ moto.Couleur }}</strong>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h6 class="text-muted mb-1">Cylindrée</h6>
+                            <strong class="text-primary">{{ moto.Cylindree }}cc</strong>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <h6 class="text-muted mb-1">Puissance</h6>
+                            <strong class="text-danger">{{ moto.Chevaux }}ch</strong>
+                        </div>
+                    </div>
+
+                    {% if moto.Description %}
+                        <div class="mb-4">
+                            <h6 class="text-muted mb-2">Description</h6>
+                            <p class="card-text">{{ moto.Description|nl2br }}</p>
+                        </div>
+                    {% endif %}
+
+                    {% if moto.Utilite %}
+                        <div class="mb-4">
+                            <h6 class="text-muted mb-2">Utilité</h6>
+                            <p class="card-text">{{ moto.Utilite|nl2br }}</p>
+                        </div>
+                    {% endif %}
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        <a href="{{ path('app_moto_list') }}" class="btn btn-outline-secondary me-md-2">
+                            ⬅️ Retour au garage
+                        </a>
+                        <a href="{{ path('app_moto_edit', {'id': moto.id}) }}" class="btn btn-warning">
+                            ✏️ Modifier
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.img-fluid {
+    border: 3px solid #fff;
+}
+
+.badge.fs-6 {
+    font-size: 0.875rem !important;
+}
+
+.text-primary {
+    color: #007bff !important;
+}
+
+.text-danger {
+    color: #dc3545 !important;
+}
+
+h6.text-muted {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+
+.breadcrumb {
+    background: none;
+    padding: 0;
+}
+
+.breadcrumb a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+</style>
+{% endblock %}

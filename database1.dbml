@@ -1,0 +1,50 @@
+Table "doctrine_migration_versions" {
+  "version" varchar(191) [pk, not null]
+  "executed_at" timestamp [default: `NULL::timestamp without time zone`]
+  "execution_time" int4
+}
+
+Table "garage" {
+  "id" int4 [pk, not null, increment]
+  "nom" varchar(255) [not null]
+  "lieu" varchar(255) [not null]
+  "code_postal" int4 [not null]
+}
+
+Table "moto" {
+  "id" int4 [pk, not null, increment]
+  "marque" varchar(255) [not null]
+  "modele" varchar(255) [not null]
+  "edition" varchar(255) [default: `NULL::character varying`]
+  "categorie" varchar(100) [not null]
+  "annee" int4 [not null]
+  "couleur" varchar(50) [not null]
+  "cylindree" int4 [not null]
+  "chevaux" int4 [not null]
+  "description" text [not null]
+  "utilite" text
+  "image" varchar(255) [default: `NULL::character varying`]
+}
+
+Table "user" {
+  "id" int4 [pk, not null, increment]
+  "email" varchar(180) [unique, not null]
+  "roles" json [not null]
+  "password" varchar(255) [not null]
+}
+
+Table "messenger_messages" {
+  "id" int8 [pk, not null, increment]
+  "body" text [not null]
+  "headers" text [not null]
+  "queue_name" varchar(190) [not null]
+  "created_at" timestamp [not null, note: '(DC2Type:datetime_immutable)']
+  "available_at" timestamp [not null, note: '(DC2Type:datetime_immutable)']
+  "delivered_at" timestamp [default: `NULL::timestamp without time zone`, note: '(DC2Type:datetime_immutable)']
+
+  Indexes {
+    delivered_at [type: btree, name: "idx_75ea56e016ba31db"]
+    available_at [type: btree, name: "idx_75ea56e0e3bd61ce"]
+    queue_name [type: btree, name: "idx_75ea56e0fb7336f0"]
+  }
+}

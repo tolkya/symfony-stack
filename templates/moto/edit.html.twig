@@ -1,0 +1,192 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier {{ moto.Marque }} {{ moto.Modele }}{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('app_moto_list') }}">Garage</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('app_moto_show', {'id': moto.id}) }}">{{ moto.Marque }} {{ moto.Modele }}</a></li>
+            <li class="breadcrumb-item active">Modifier</li>
+        </ol>
+    </nav>
+
+    <h1 class="mb-4">✏️ Modifier {{ moto.Marque }} {{ moto.Modele }}</h1>
+
+    {% for flash_error in app.flashes('error') %}
+        <div class="alert alert-danger">{{ flash_error }}</div>
+    {% endfor %}
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    {{ form_start(motoForm, {'attr': {'enctype': 'multipart/form-data'}}) }}
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form_label(motoForm.Marque) }}
+                                {{ form_widget(motoForm.Marque, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(motoForm.Marque) }}
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form_label(motoForm.Modele) }}
+                                {{ form_widget(motoForm.Modele, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(motoForm.Modele) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form_label(motoForm.Edition) }}
+                                {{ form_widget(motoForm.Edition, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(motoForm.Edition) }}
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                {{ form_label(motoForm.Categorie) }}
+                                {{ form_widget(motoForm.Categorie, {'attr': {'class': 'form-select'}}) }}
+                                {{ form_errors(motoForm.Categorie) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                {{ form_label(motoForm.Annee) }}
+                                {{ form_widget(motoForm.Annee, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(motoForm.Annee) }}
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                {{ form_label(motoForm.Cylindree) }}
+                                {{ form_widget(motoForm.Cylindree, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(motoForm.Cylindree) }}
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                {{ form_label(motoForm.Chevaux) }}
+                                {{ form_widget(motoForm.Chevaux, {'attr': {'class': 'form-control'}}) }}
+                                {{ form_errors(motoForm.Chevaux) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(motoForm.Couleur) }}
+                        {{ form_widget(motoForm.Couleur, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(motoForm.Couleur) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(motoForm.Description) }}
+                        {{ form_widget(motoForm.Description, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(motoForm.Description) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(motoForm.Utilite) }}
+                        {{ form_widget(motoForm.Utilite, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(motoForm.Utilite) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_label(motoForm.imageFile) }}
+                        {{ form_widget(motoForm.imageFile, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(motoForm.imageFile) }}
+                        <div class="form-text">Laissez vide pour conserver l'image actuelle</div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ path('app_moto_show', {'id': moto.id}) }}" class="btn btn-secondary me-md-2">Annuler</a>
+                        {{ form_widget(motoForm.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+                    </div>
+
+                    {{ form_end(motoForm) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Aperçu actuel</h5>
+                </div>
+                <div class="card-body text-center">
+                    {% if moto.Image %}
+                        <img src="{{ asset('uploads/' ~ moto.Image) }}" 
+                             class="img-fluid rounded mb-3"
+                             alt="{{ moto.Marque }} {{ moto.Modele }}"
+                             style="max-height: 200px; object-fit: cover;">
+                    {% else %}
+                        <div class="d-flex align-items-center justify-content-center bg-light rounded mb-3" 
+                             style="height: 200px;">
+                            <i class="fas fa-motorcycle fa-3x text-muted"></i>
+                        </div>
+                    {% endif %}
+                    
+                    <h6>{{ moto.Marque }} {{ moto.Modele }}</h6>
+                    <p class="text-muted small mb-2">{{ moto.Annee }} • {{ moto.Categorie }}</p>
+                    <div class="d-flex justify-content-between small">
+                        <span>{{ moto.Cylindree }}cc</span>
+                        <span>{{ moto.Chevaux }}ch</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.container {
+    max-width: 1200px;
+}
+
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.form-label {
+    font-weight: 600;
+    color: #495057;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+}
+
+.breadcrumb {
+    background: none;
+    padding: 0;
+}
+
+.breadcrumb a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+</style>
+{% endblock %}
