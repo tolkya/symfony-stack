@@ -34,6 +34,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\OneToOne(mappedBy: 'proprietaire', cascade: ['persist', 'remove'])]
+    private ?Garage $garage = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -113,5 +116,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials(): void
     {
         // @deprecated, to be removed when upgrading to Symfony 8
+    }
+
+    public function getGarage(): ?Garage
+    {
+        return $this->garage;
+    }
+
+    public function setGarage(?Garage $garage): static
+    {
+        // Unset the owning side of the relation if necessary
+        if ($garage === null && $this->garage !== null) {
+            $this->garage->setProprietaire(null);
+        }
+
+        // Set the owning side of the relation if necessary
+        if ($garage !== null && $garage->getProprietaire() !== $this) {
+            $garage->setProprietaire($this);
+        }
+
+        $this->garage = $garage;
+
+        return $this;
     }
 }

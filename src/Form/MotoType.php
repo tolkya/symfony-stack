@@ -13,14 +13,18 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Marque;
 
 class MotoType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('Marque', TextType::class, [
+            ->add('marque', EntityType::class, [
                 'label' => 'Marque',
+                'class' => Marque::class,
+                'choice_label' => 'nom',
                 'attr' => ['placeholder' => 'Honda, Yamaha, Kawasaki...']
             ])
             ->add('Modele', TextType::class, [

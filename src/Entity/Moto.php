@@ -14,9 +14,9 @@ class Moto
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: 'La marque est obligatoire')]
-    private ?string $Marque = null;
+    #[ORM\ManyToOne(targetEntity: Marque::class, inversedBy: 'motos')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Marque $marque = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'Le modèle est obligatoire')]
@@ -55,19 +55,23 @@ class Moto
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $Image = null;
 
+    #[ORM\ManyToOne(targetEntity: Garage::class, inversedBy: 'motos')]
+    #[ORM\JoinColumn(name: 'garage_id', referencedColumnName: 'id')]
+    private ?Garage $garage = null;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getMarque(): ?string
+    public function getMarque(): ?Marque
     {
-        return $this->Marque;
+        return $this->marque;
     }
 
-    public function setMarque(string $Marque): static
+    public function setMarque(?Marque $marque): static
     {
-        $this->Marque = $Marque;
+        $this->marque = $marque;
 
         return $this;
     }
@@ -188,6 +192,18 @@ class Moto
     public function setImage(?string $Image): static
     {
         $this->Image = $Image;
+
+        return $this;
+    }
+
+    public function getGarage(): ?Garage
+    {
+        return $this->garage;
+    }
+
+    public function setGarage(?Garage $garage): static
+    {
+        $this->garage = $garage;
 
         return $this;
     }
