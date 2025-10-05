@@ -18,8 +18,24 @@
                         </div>
                         
                         <div class="mb-3">
-                            {{ form_label(registrationForm.plainPassword, 'Mot de passe', {'label_attr': {'class': 'form-label'}}) }}
-                            {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'placeholder': 'Votre mot de passe'}}) }}
+                            {{ form_label(registrationForm.plainPassword.first, null, {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(registrationForm.plainPassword.first) }}
+                        </div>
+                        
+                        <div class="password-strength-meter" style="display: none;">
+                            <div class="strength-bar"></div>
+                            <div class="strength-text"></div>
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_label(registrationForm.plainPassword.second, null, {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(registrationForm.plainPassword.second) }}
+                        </div>
+
+                        <!-- Affichage des erreurs globales de correspondance -->
+                        <div class="mb-3">
                             {{ form_errors(registrationForm.plainPassword) }}
                         </div>
                         
