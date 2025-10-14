@@ -48,10 +48,14 @@ class RegistrationFormType extends AbstractType
                     new NotBlank([
                         'message' => 'Veuillez entrer un mot de passe',
                     ]),
-                    new PasswordStrength([
-                        'message' => 'Votre mot de passe est trop faible.',
-                        'minScore' => PasswordStrength::STRENGTH_MEDIUM,
+                    new Length([
+                        'min' => 8,
+                        'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
                     ]),
+                    new PasswordStrength(
+                        minScore: PasswordStrength::STRENGTH_WEAK,
+                        message: 'Votre mot de passe est trop faible. Utilisez un mot de passe plus sécurisé.'
+                    ),
                 ],
             ])
         ;

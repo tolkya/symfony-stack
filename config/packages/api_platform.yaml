@@ -1,0 +1,19 @@
+api_platform:
+    title: API Motos
+    description: 'API pour la gestion des motos, marques et garages'
+    version: 1.0.0
+    show_webby: false
+    defaults:
+        stateless: true
+        cache_headers:
+            vary: ['Content-Type', 'Authorization', 'Origin']
+        pagination_enabled: true
+        pagination_items_per_page: 20
+        pagination_maximum_items_per_page: 100
+    formats:
+        json: ['application/json']
+        jsonld: ['application/ld+json']
+    docs_formats:
+        jsonopenapi: ['application/vnd.openapi+json']
+        jsonapi: ['application/vnd.api+json']
+        html: ['text/html']
