@@ -343,7 +343,15 @@ Ajouter et modifier dans le service `database` :
 
 Modifier le fichier ".env" 
 ```bash
-# DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/app?serverVersion=10.11.2-MariaDB&charset=utf8mb4"
+###> symfony/framework-bundle ###
+APP_ENV=dev
+APP_SECRET=""                                # <- modifier cette ligne
+###< symfony/framework-bundle ###
+
+###> doctrine/doctrine-bundle ###
+# Format described at https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
+# IMPORTANT: You MUST configure your server version, either here or in config/packages/doctrine.yaml
+
 DATABASE_URL=""                             # <- modifier cette ligne
 ###< doctrine/doctrine-bundle ###
 
